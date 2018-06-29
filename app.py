@@ -6,7 +6,7 @@ import pandas as pd
 
 app = dash.Dash(__name__)
 server = app.server
-app.title = "SJ Charts"
+app.title = "SJ Data Charts"
 app.scripts.config.serve_locally = True
 
 # Custom CSS and Google Site Tag
