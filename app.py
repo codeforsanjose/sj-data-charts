@@ -21,7 +21,7 @@ app.scripts.append_script({
 })
 
 # Get the RAW CSV
-csv = "https://raw.githubusercontent.com/aakashhdesai/sj-data-analysis/master/sj_economics_monthly_2006_2016.csv"
+csv = "https://raw.githubusercontent.com/codeforsanjose/sj-data-charts/master/sj_economics_monthly_2006_2016.csv"
 
 # Reads the csv and analyzes the dataframe
 def analyze_jobs_frame():
