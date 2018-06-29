@@ -15,11 +15,6 @@ app.css.append_css({
     "external_url": external_css
 })
 
-external_js = 'https://cdn.rawgit.com/aakashhdesai/6f89aad9a8968a2693fdd415bad63f29/raw/9cf2f150de0d47884320f2d8e81e2df6d500ca8d/script.js'
-app.scripts.append_script({
-    "external_url": external_js
-})
-
 # Get the RAW CSV
 csv = "https://raw.githubusercontent.com/codeforsanjose/sj-data-charts/master/sj_economics_monthly_2006_2016.csv"
 
