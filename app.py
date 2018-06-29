@@ -80,8 +80,8 @@ app.layout = html.Div([
         html.Div(id='page-content'),
         
         html.Div(children=[
-            html.A(html.Button('Data'),
-                href='https://github.com/aakashhdesai/sj-data-analysis',
+            html.A(html.Button('Source'),
+                href='https://github.com/codeforsanjose/sj-data-charts',
             ),
             
             html.I(
