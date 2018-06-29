@@ -48,6 +48,20 @@ def analyze_unemployment_frame():
     
     return unemployment_frame
 
+def analyze_housing_frame():
+    
+     # Get the raw data from a csv import
+    housing = pd.read_csv(csv)
+    
+    # Initialize the data to work with
+    housing_frame = pd.DataFrame({})
+    only_housing_time = housing.groupby(housing["Year"].between(2008,2015, inclusive=True), as_index = False)["Year", "Single Family Home", "Condo/Townhome"]
+    
+    for year in range(2006,2016 + 1):
+        housing_frame = housing_frame.append(only_housing_time.apply(lambda x: x[x['Year'] == year]).mean(), ignore_index=True)   
+    
+    return housing_frame
+
 def get_jobs_table(dataframe):
 
     table_frame = dataframe.filter(regex="Jobs$", axis=1)
@@ -64,8 +78,6 @@ def generate_table(dataframe, max_rows=10):
             html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
         ]) for i in range(min(len(dataframe), max_rows))]
     )
-
-# Call analysze frame as needed
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -129,20 +141,30 @@ main = html.Div(children=[
     ),
 ])
 
+hf = analyze_housing_frame()
 housing = html.Div(children=[
     # Set a Title for the Page
     html.H2(id='dashboard-title',children=[
         'San Jose Housing Prices'
     ]),
     
-    html.H1(
-        'Coming Soon!',
-        style={
-            'textAlign': 'center',
-            'font': 'Helvetica',
-            'font-size': '72px',
-            'margin': '130px'
-        }
+    # Plot the unemployment graph
+    dcc.Graph(
+        id='sj-housing-graph',
+        figure={
+            'data': [
+                {'x': hf["Year"], 'y': hf["Single Family Home"], 'type': 'line', 'name': 'Single Family Home'},
+                {'x': hf["Year"], 'y': hf["Condo/Townhome"], 'type': 'line', 'name': 'Condo/Townhome'},
+                ],
+                'layout': {
+                    'font': {
+                    'showlegend': 'False'
+                    }
+                }
+            },
+            config={
+                'displayModeBar': False
+            }
     )
 ])
 
@@ -155,7 +177,7 @@ unemployment = html.Div(children=[
     
     # Plot the unemployment graph
     dcc.Graph(
-        id='sj-jobs-sector-graph',
+        id='sj-unemployment-graph',
         figure={
             'data': [
                 {'x': uf["Year"], 'y': uf["SJ Unemployment"], 'type': 'line', 'name': 'Unemployment'},
@@ -170,7 +192,7 @@ unemployment = html.Div(children=[
             config={
                 'displayModeBar': False
             }
-    ),
+    )
 ])
 
 # Update the index
